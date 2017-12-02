@@ -1,6 +1,4 @@
-package domen;
-
-import java.util.Date;
+package domain;
 
 public class Post {
 
