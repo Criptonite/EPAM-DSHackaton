@@ -15,13 +15,13 @@ public class User {
     private int views;
     private int upVotes;
     private int downVotes;
-
+    private int[] responsibility;
 
     public User() {
     }
 
     public User(int id, int reputation, String creationDate, String displayName, String emailHash, String lastAccessDate, String websiteUrl,
-        String location, int age, String aboutMe, int views, int upVotes, int downVotes) {
+        String location, int age, String aboutMe, int views, int upVotes, int downVotes, int[] responsibility) {
         this.id = id;
         this.reputation = reputation;
         this.creationDate = creationDate;
@@ -35,6 +35,7 @@ public class User {
         this.views = views;
         this.upVotes = upVotes;
         this.downVotes = downVotes;
+        this.responsibility = responsibility;
     }
 
     public int getId() {
@@ -49,8 +50,8 @@ public class User {
         return reputation;
     }
 
-    public void setReputation(int reputation) {
-        this.reputation = reputation;
+    public int[] getResponsibility() {
+        return responsibility;
     }
 
     public String getCreationDate() {
@@ -140,4 +141,15 @@ public class User {
     public void setDownVotes(int downVotes) {
         this.downVotes = downVotes;
     }
+
+    public void setResponsibility(int[] responsibility)
+    {
+        this.responsibility = new int[responsibility.length];
+        System.arraycopy(responsibility, 0, this.responsibility, 0, responsibility.length);
+    }
+
+    public void setReputation(int reputation) {
+        this.reputation = reputation;
+    }
+
 }

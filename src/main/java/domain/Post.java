@@ -16,12 +16,13 @@ public class Post {
     private int answerCount;
     private int commentCount;
     private int favoriteCount;
+    private int[] sphere;
 
     public Post() {
     }
 
     public Post(int id, PostType postTypeId, int parentId, AcceptedTypeId acceptedState, String creationDate, int score, int viewCount,
-        String body, int ownerUserId, String title, String[] tags, int answerCount, int commentCount, int favoriteCount) {
+        String body, int ownerUserId, String title, String[] tags, int answerCount, int commentCount, int favoriteCount, int[] sphere) {
         this.id = id;
         this.postTypeId = postTypeId;
         this.parentId = parentId;
@@ -36,6 +37,7 @@ public class Post {
         this.answerCount = answerCount;
         this.commentCount = commentCount;
         this.favoriteCount = favoriteCount;
+        this.sphere = sphere;
     }
 
 
@@ -149,5 +151,14 @@ public class Post {
 
     public void setFavoriteCount(int favoriteCount) {
         this.favoriteCount = favoriteCount;
+    }
+
+    public int[] getSphere() {
+        return sphere;
+    }
+
+    public void setSphere(int[] sphere) {
+        this.sphere = new int[sphere.length];
+        System.arraycopy(sphere, 0, this.sphere, 0, sphere.length);
     }
 }
