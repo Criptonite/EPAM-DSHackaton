@@ -193,6 +193,21 @@ public class UserVectorsProvider {
             userVectors.put(entry.getKey(), userVector);
         }
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("users__.csv"))) {
+            userVectors.entrySet()
+                       .stream()
+                       .filter(entry -> Arrays.stream(entry.getValue()).sum() != 0)
+                       .forEachOrdered(entry -> {
+                           try {
+                               writer.write(entry.getKey() + "," + Arrays.stream(entry.getValue()).mapToObj(String::valueOf).collect(joining(",")) + "\r\n");
+                           } catch (IOException e) {
+                               e.printStackTrace();
+                           }
+                       });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return userVectors;
     }
 

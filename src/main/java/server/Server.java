@@ -1,5 +1,6 @@
 package server;
 
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import dataset.UserVectorsProvider;
@@ -8,10 +9,10 @@ import jsoup.BodyParser;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toMap;
 
 public class Server {
@@ -21,7 +22,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         HttpServer server = HttpServer.create();
-        server.bind(new InetSocketAddress(10_000), 10);
+        server.bind(new InetSocketAddress(10_001), 20);
         server.createContext("/find", Server::handle);
         server.createContext("/stop", httpExchange -> server.stop(0));
         server.start();
@@ -29,16 +30,19 @@ public class Server {
     }
 
     private static void handle(HttpExchange exchange) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(exchange.getResponseBody()));
-             BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()))) {
-            String type = reader.readLine();
-            String questionBody = "url".equals(type) ? QUESTION_PARSER.getQuestionBody(reader.readLine()) : reader.readLine();
+        try (BufferedOutputStream out = new BufferedOutputStream(exchange.getResponseBody())) {
+            String questionBody = QUESTION_PARSER.getQuestionBody(exchange.getRequestHeaders().getFirst("url"));
 
             Integer[] idNearests = findIdNearestUsers(calcVector(questionBody.toLowerCase()));
 
-            for (int userId : idNearests) {
-                writer.write(String.valueOf(userId) + "\r\n");
-            }
+            String response = "{\r\n\tids=" + Arrays.stream(idNearests).map(Object::toString).collect(joining(",", "{", "}")) + "\r\n}\r\n";
+            byte[] bytes = response.getBytes("UTF-8");
+
+            exchange.sendResponseHeaders(200, bytes.length);
+            Headers responseHeaders = exchange.getResponseHeaders();
+            responseHeaders.add("Content-Type", "application/json");
+            responseHeaders.add("Content-Length", String.valueOf(bytes.length));
+            out.write(bytes);
         }
     }
 
