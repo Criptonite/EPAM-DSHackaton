@@ -24,19 +24,39 @@ public class BodyParser {
         } catch (IOException e) {
             throw new IOException("Wrong URL");
         }
-        Elements posts = doc.getElementsByClass("post-text");
+
+
+
+        Element questionDiv = doc.getElementsByClass("question").first();
+
+        //body
+        Elements posts = questionDiv.getElementsByClass("post-text");
         Element questionPost = posts.first();
+
+        //tags
+        Elements tags = questionDiv.getElementsByClass("post-taglist");
+
+
+
         String questionBody = questionPost.html();
         for (String badWord : BAD_WORDS) {
             questionBody = questionBody.replaceAll(badWord, " ");
         }
+
+        StringBuilder questionBodyBuilder = new StringBuilder(questionBody);
+        for(Element tag : tags){
+            questionBodyBuilder.append((tag.getElementsByTag("a").html().trim()).replaceAll("\\s+", " "));
+        }
+        questionBody = questionBodyBuilder.toString();
         return questionBody.trim();
     }
 
 
+
+
     public static void main(String[] args) throws IOException {
         BodyParser bp = new BodyParser();
-        System.out.println(bp.getQuestionBody(""));
+        System.out.println(bp.getQuestionBody("https://stackoverflow.com/questions/47541598/profiling-inlined-c-functions-with-visual-studio-compiler"));
     }
 
 
