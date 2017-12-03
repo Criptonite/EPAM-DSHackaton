@@ -5,7 +5,7 @@ public class Post {
     private int id;
     private PostType postTypeId;
     private int parentId;
-    private AcceptedTypeId acceptedState;
+    private int acceptedState;
     private String creationDate;
     private int score;
     private int viewCount;
@@ -20,7 +20,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(int id, PostType postTypeId, int parentId, AcceptedTypeId acceptedState, String creationDate, int score, int viewCount,
+    public Post(int id, PostType postTypeId, int parentId, int acceptedState, String creationDate, int score, int viewCount,
         String body, int ownerUserId, String title, int answerCount, int commentCount, int favoriteCount, int[] sphere) {
         this.id = id;
         this.postTypeId = postTypeId;
@@ -64,11 +64,11 @@ public class Post {
         this.parentId = parentId;
     }
 
-    public AcceptedTypeId getAcceptedState() {
+    public int getAcceptedState() {
         return acceptedState;
     }
 
-    public void setAcceptedState(AcceptedTypeId acceptedState) {
+    public void setAcceptedState(int acceptedState) {
         this.acceptedState = acceptedState;
     }
 
