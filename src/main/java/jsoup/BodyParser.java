@@ -44,6 +44,7 @@ public class BodyParser {
         }
 
         StringBuilder questionBodyBuilder = new StringBuilder(questionBody);
+        questionBodyBuilder.append(" | ");
         for(Element tag : tags){
             questionBodyBuilder.append((tag.getElementsByTag("a").html().trim()).replaceAll("\\s+", " "));
         }
