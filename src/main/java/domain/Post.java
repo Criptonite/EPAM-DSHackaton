@@ -1,23 +1,35 @@
 package domain;
 
+import dataset.UserVectorsProvider;
+
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Post {
 
     private int id;
     private PostType postTypeId;
-    private int parentId;
+    private Integer parentId;
     private AcceptedTypeId acceptedState;
     private String creationDate;
     private int score;
     private int viewCount;
     private String body;
-    private int ownerUserId;
+    private Integer ownerUserId;
     private String title;
     private int answerCount;
     private int commentCount;
     private int favoriteCount;
     private int[] sphere;
 
-    public Post() {
+    public Post(int id, PostType postTypeId, Integer parentId, Integer ownerUserId, int score, int viewCount) {
+        this.id = id;
+        this.postTypeId = postTypeId;
+        this.parentId = parentId;
+        this.ownerUserId = ownerUserId;
+        this.score = score;
+        this.viewCount = viewCount;
+        sphere = new int[UserVectorsProvider.SECTIONS.size()];
     }
 
     public Post(int id, PostType postTypeId, int parentId, AcceptedTypeId acceptedState, String creationDate, int score, int viewCount,
@@ -39,6 +51,11 @@ public class Post {
         System.arraycopy(sphere, 0, this.sphere, 0, sphere.length);
     }
 
+    public void merge(int[] vector) {
+        for (int i = 0; i < vector.length; ++i) {
+            this.sphere[i] += vector[i];
+        }
+    }
 
     public int getId() {
         return id;
@@ -56,7 +73,7 @@ public class Post {
         this.postTypeId = postTypeId;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
@@ -104,7 +121,7 @@ public class Post {
         this.body = body;
     }
 
-    public int getOwnerUserId() {
+    public Integer getOwnerUserId() {
         return ownerUserId;
     }
 
@@ -149,7 +166,36 @@ public class Post {
     }
 
     public void setSphere(int[] sphere) {
-        this.sphere = new int[sphere.length];
-        System.arraycopy(sphere, 0, this.sphere, 0, sphere.length);
+        this.sphere = Arrays.copyOf(sphere, sphere.length);
+    }
+
+    public void incSphere(int index, int value) {
+        sphere[index] += value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post)o;
+        return id == post.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", postTypeId=" + postTypeId +
+                ", parentId=" + parentId +
+                ", score=" + score +
+                ", viewCount=" + viewCount +
+                ", ownerUserId=" + ownerUserId +
+                ", sphere=" + Arrays.toString(sphere) +
+                '}';
     }
 }
