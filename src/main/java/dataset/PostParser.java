@@ -36,7 +36,7 @@ public class PostParser {
                 posts.add(new Post(id,
                                     postTypeId,
                                     parrentId,
-                                    acceptedId,
+                                    null,
                                     creationDate,
                                     score,
                                     viewCount,
