@@ -20,6 +20,10 @@ public class User {
     public User() {
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public User(int id, int reputation, String creationDate, String displayName, String emailHash, String lastAccessDate, String websiteUrl,
         String location, int age, String aboutMe, int views, int upVotes, int downVotes, int[] responsibility) {
         this.id = id;

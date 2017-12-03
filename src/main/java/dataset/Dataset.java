@@ -1,5 +1,7 @@
 package dataset;
 
+import java.util.Arrays;
+
 public class Dataset {
 
     private int id;
@@ -29,5 +31,13 @@ public class Dataset {
     public void setVector(int[] vector) {
         this.vector = new int[vector.length];
         System.arraycopy(vector, 0, this.vector, 0, vector.length);
+    }
+
+    @Override
+    public String toString() {
+        return "Dataset{" +
+                "id=" + id +
+                ", vector=" + Arrays.toString(vector) +
+                '}';
     }
 }

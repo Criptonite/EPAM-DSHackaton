@@ -44,4 +44,6 @@ public class User {
                 downVotes + "," +
                 accountId;
     }
+
+
 }
