@@ -10,7 +10,8 @@ public class Dataset {
 
     public Dataset(int id, int[] vector) {
         this.id = id;
-        this.vector = vector;
+        this.vector = new int[vector.length];
+        System.arraycopy(vector, 0, this.vector, 0, vector.length);
     }
 
     public int getId() {

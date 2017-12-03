@@ -12,7 +12,6 @@ public class Post {
     private String body;
     private int ownerUserId;
     private String title;
-    private String[] tags;
     private int answerCount;
     private int commentCount;
     private int favoriteCount;
@@ -22,7 +21,7 @@ public class Post {
     }
 
     public Post(int id, PostType postTypeId, int parentId, AcceptedTypeId acceptedState, String creationDate, int score, int viewCount,
-        String body, int ownerUserId, String title, String[] tags, int answerCount, int commentCount, int favoriteCount, int[] sphere) {
+        String body, int ownerUserId, String title, int answerCount, int commentCount, int favoriteCount, int[] sphere) {
         this.id = id;
         this.postTypeId = postTypeId;
         this.parentId = parentId;
@@ -33,11 +32,11 @@ public class Post {
         this.body = body;
         this.ownerUserId = ownerUserId;
         this.title = title;
-        this.tags = tags;
         this.answerCount = answerCount;
         this.commentCount = commentCount;
         this.favoriteCount = favoriteCount;
-        this.sphere = sphere;
+        this.sphere = new int[sphere.length];
+        System.arraycopy(sphere, 0, this.sphere, 0, sphere.length);
     }
 
 
@@ -119,14 +118,6 @@ public class Post {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String[] getTags() {
-        return tags;
-    }
-
-    public void setTags(String[] tags) {
-        this.tags = tags;
     }
 
     public int getAnswerCount() {

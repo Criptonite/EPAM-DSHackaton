@@ -35,7 +35,8 @@ public class User {
         this.views = views;
         this.upVotes = upVotes;
         this.downVotes = downVotes;
-        this.responsibility = responsibility;
+        this.responsibility = new int[responsibility.length];
+        System.arraycopy(responsibility, 0, this.responsibility, 0, responsibility.length);
     }
 
     public int getId() {
